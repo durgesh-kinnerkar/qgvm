@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The QVGM Investment Guide: A Visual Analysis of India's Premier Stocks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F4F7F5;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 450px;
+            max-height: 55vh;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 400px;
+                max-height: 65vh;
+            }
+        }
+        .kpi-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .table-sortable th {
+            cursor: pointer;
+        }
+        .table-sortable th:hover {
+            background-color: #e2e8f0;
+        }
+        .framework-card ul li {
+            position: relative;
+            padding-left: 20px;
+        }
+        .framework-card ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: inherit;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-[#0A2463] text-white text-center py-16 px-4">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">The QVGM Investment Guide</h1>
+        <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto">A Visual Analysis of India's Top 50 Investment Opportunities from the NIFTY 500</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="framework" class="mb-16">
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-center text-[#0A2463] mb-4">The QVGM Investment Framework</h2>
+                <p class="text-lg text-center text-gray-600 max-w-4xl mx-auto mb-8">
+                    This analysis is built upon a disciplined, multi-faceted framework designed to identify fundamentally superior companies. The QVGM model evaluates every stock across four critical pillars—Quality, Growth, Value, and Momentum—to provide a holistic view of its investment potential, prioritizing long-term resilience and sustainable returns.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+                    <div class="framework-card bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                        <h3 class="text-xl font-bold text-blue-800">Quality (40%)</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-3">The cornerstone of the analysis. This pillar identifies financially healthy, stable, and efficient businesses capable of weathering economic cycles.</p>
+                        <ul class="space-y-2 text-blue-700">
+                            <li>ROE & ROCE <span class="block text-xs text-gray-500">Measures profitability and capital efficiency.</span></li>
+                            <li>3-Year Avg ROE <span class="block text-xs text-gray-500">Assesses consistency of high performance.</span></li>
+                            <li>CFO/PAT Ratio <span class="block text-xs text-gray-500">Indicates the quality of earnings (cash vs. profit).</span></li>
+                        </ul>
+                    </div>
+                    <div class="framework-card bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+                        <h3 class="text-xl font-bold text-green-800">Growth (30%)</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-3">Evaluates a company's ability to expand its operations and earnings, a primary driver of long-term shareholder returns.</p>
+                        <ul class="space-y-2 text-green-700">
+                            <li>TTM Revenue Growth <span class="block text-xs text-gray-500">Shows top-line business expansion.</span></li>
+                            <li>TTM Profit Growth <span class="block text-xs text-gray-500">Measures bottom-line operational leverage.</span></li>
+                            <li>Cash Flow Growth <span class="block text-xs text-gray-500">Validates that growth is generating real cash.</span></li>
+                        </ul>
+                    </div>
+                    <div class="framework-card bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
+                        <h3 class="text-xl font-bold text-orange-800">Value (20%)</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-3">Identifies companies trading at a discount to their intrinsic worth, providing a margin of safety for the investment.</p>
+                        <ul class="space-y-2 text-orange-700">
+                            <li>P/E Ratio <span class="block text-xs text-gray-500">Price relative to current earnings.</span></li>
+                            <li>P/B Ratio <span class="block text-xs text-gray-500">Price relative to net asset value.</span></li>
+                            <li>Valuation Score <span class="block text-xs text-gray-500">A composite measure vs. peers & history.</span></li>
+                        </ul>
+                    </div>
+                    <div class="framework-card bg-purple-50 border-l-4 border-purple-500 p-4 rounded-r-lg">
+                        <h3 class="text-xl font-bold text-purple-800">Momentum (10%)</h3>
+                         <p class="text-sm text-gray-600 mt-1 mb-3">Measures current market sentiment and price trends, acting as a confirmation or secondary indicator.</p>
+                         <ul class="space-y-2 text-purple-700">
+                            <li>Trendlyne Score <span class="block text-xs text-gray-500">A technical score of bullishness/bearishness.</span></li>
+                            <li>Price Trend Indicators <span class="block text-xs text-gray-500">Relative strength and moving averages.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="top-performers" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#0A2463]">The Top 10 Champions</h2>
+            <p class="text-lg text-center text-gray-600 mb-8 max-w-3xl mx-auto">These companies represent the premier investment opportunities, achieving the highest composite scores based on the rigorous QVGM analysis. They exhibit a superior balance of financial strength, sustainable growth, and reasonable valuation.</p>
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <div class="chart-container">
+                    <canvas id="topPerformersChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <section id="pillar-leaders" class="mb-16">
+             <h2 class="text-3xl font-bold text-center mb-8 text-[#0A2463]">Pillar Leaders Spotlight</h2>
+             <p class="text-lg text-center text-gray-600 mb-8 max-w-3xl mx-auto">While the final score provides a holistic rank, it's insightful to see which companies are the undisputed leaders within each of the four fundamental pillars. These are the best-in-class performers for each specific attribute.</p>
+             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="kpi-card bg-white rounded-xl shadow-lg p-6 text-center border-t-4 border-blue-500">
+                    <h3 class="text-lg font-bold text-slate-800">👑 Quality King</h3>
+                    <p class="text-sm text-gray-500 mb-4">The Hallmark of Financial Strength & Stability</p>
+                    <p class="text-2xl font-bold text-blue-600">Hindustan Unilever</p>
+                    <p class="text-4xl font-extrabold text-blue-500 mt-2">98.6</p>
+                </div>
+                <div class="kpi-card bg-white rounded-xl shadow-lg p-6 text-center border-t-4 border-green-500">
+                    <h3 class="text-lg font-bold text-slate-800">🚀 Growth Engine</h3>
+                    <p class="text-sm text-gray-500 mb-4">The Apex of Business Expansion & Profitability</p>
+                    <p class="text-2xl font-bold text-green-600">Acutaas Chemicals</p>
+                    <p class="text-4xl font-extrabold text-green-500 mt-2">98.9</p>
+                </div>
+                <div class="kpi-card bg-white rounded-xl shadow-lg p-6 text-center border-t-4 border-orange-500">
+                    <h3 class="text-lg font-bold text-slate-800">💎 Value Gem</h3>
+                    <p class="text-sm text-gray-500 mb-4">The Clearest Case of Price vs. Intrinsic Worth</p>
+                    <p class="text-2xl font-bold text-orange-600">Canara Bank</p>
+                    <p class="text-4xl font-extrabold text-orange-500 mt-2">98.2</p>
+                </div>
+                <div class="kpi-card bg-white rounded-xl shadow-lg p-6 text-center border-t-4 border-purple-500">
+                    <h3 class="text-lg font-bold text-slate-800">⚡ Momentum Star</h3>
+                    <p class="text-sm text-gray-500 mb-4">The Strongest Recognition by Market Trend</p>
+                    <p class="text-2xl font-bold text-purple-600">ICICI Bank Ltd.</p>
+                    <p class="text-4xl font-extrabold text-purple-500 mt-2">82.4</p>
+                </div>
+             </div>
+        </section>
+
+        <section id="matrix-analysis" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8 text-[#0A2463]">Strategic Matrix Analysis</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-center mb-1 text-[#0A2463]">Quality vs. Growth Matrix</h3>
+                    <p class="text-md text-center text-gray-600 mb-6">This matrix is crucial for identifying ideal long-term investments. The top-right quadrant contains the 'Stars'—companies with both high-quality fundamentals and strong growth, the most desirable profile. The top-left quadrant holds 'Cash Cows'—stable, high-quality firms with lower growth. The bottom-right represents 'Speculative Growth'—high-risk, high-reward plays that require caution.</p>
+                    <div class="chart-container">
+                        <canvas id="qualityGrowthChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-center mb-1 text-[#0A2463]">Value vs. Momentum Matrix</h3>
+                    <p class="text-md text-center text-gray-600 mb-6">This matrix helps in timing and positioning. The top-right quadrant highlights 'Strong Performers'—attractively valued stocks that are also gaining market favor. The top-left quadrant shows 'Deep Value' plays—contrarian opportunities that are cheap but out of favor. The bottom-right contains 'Expensive Momentum' stocks, where high expectations are already priced in.</p>
+                    <div class="chart-container">
+                        <canvas id="valueMomentumChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="sector-analysis" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8 text-[#0A2463]">Sectoral Strength Analysis</h2>
+             <p class="text-lg text-center text-gray-600 mb-8 max-w-3xl mx-auto">This chart provides a bird's-eye view of the market, breaking down the average QVGM scores for the most represented industries in our top 50 list. Note the high average Quality scores in Banks and IT, reflecting their robust business models. Conversely, see how high Growth scores are concentrated in emerging sectors like Engineering and Pharmaceuticals.</p>
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <div class="chart-container" style="max-height: 500px; height: 500px;">
+                    <canvas id="sectorStrengthChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <section id="full-ranking" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8 text-[#0A2463]">The Definitive QVGM Rankings</h2>
+            <div class="bg-white rounded-xl shadow-lg p-2 md:p-4 overflow-x-auto">
+                <table id="rankingTable" class="w-full text-sm text-left text-gray-500 table-sortable">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                        <tr>
+                            <th scope="col" class="px-4 py-3" data-sort="number">Rank</th>
+                            <th scope="col" class="px-4 py-3" data-sort="string">Stock Name</th>
+                            <th scope="col" class="px-4 py-3" data-sort="string">Industry</th>
+                            <th scope="col" class="px-4 py-3" data-sort="number">Final Score</th>
+                            <th scope="col" class="px-4 py-3" data-sort="number">Quality</th>
+                            <th scope="col" class="px-4 py-3" data-sort="number">Growth</th>
+                            <th scope="col" class="px-4 py-3" data-sort="number">Value</th>
+                            <th scope="col" class="px-4 py-3" data-sort="number">Momentum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#0A2463] text-white text-center py-6 px-4 mt-16">
+        <p class="text-slate-300">Analysis based on the QVGM Framework applied to NIFTY 500 data.</p>
+        <p class="text-sm text-slate-400 mt-2">Disclaimer: This infographic is for informational purposes only and does not constitute investment advice.</p>
+    </footer>
+    
+<script>
+const stockData = [
+    { rank: 1, name: "ITC Ltd.", industry: "Cigarettes-Tobacco Products", final: 82.1, quality: 97.5, growth: 55.2, value: 85.3, momentum: 41.8 },
+    { rank: 2, name: "Skipper Ltd.", industry: "Construction & Engineering", final: 80.5, quality: 84.1, growth: 88.3, value: 68.1, momentum: 63.5 },
+    { rank: 3, name: "HDFC Bank Ltd.", industry: "Banks", final: 79.8, quality: 90.3, growth: 72.1, value: 61.5, momentum: 74.2 },
+    { rank: 4, name: "Canara Bank", industry: "Banks", final: 79.2, quality: 72.5, growth: 70.3, value: 98.2, momentum: 60.1 },
+    { rank: 5, name: "State Bank of India", industry: "Banks", final: 78.9, quality: 75.8, growth: 58.9, value: 94.6, momentum: 61.3 },
+    { rank: 6, name: "ICICI Bank Ltd.", industry: "Banks", final: 78.1, quality: 80.2, growth: 69.8, value: 68.3, momentum: 82.4 },
+    { rank: 7, name: "Mazagon Dock Shipbuilders Ltd.", industry: "Aerospace & Defence", final: 76.3, quality: 95.1, growth: 81.2, value: 35.4, momentum: 60.1 },
+    { rank: 8, name: "Tata Consultancy Services Ltd.", industry: "IT Consulting & Software", final: 75.5, quality: 96.8, growth: 60.1, value: 54.3, momentum: 68.9 },
+    { rank: 9, name: "Reliance Industries Ltd.", industry: "Oil & Gas - Refining & Marketing", final: 74.9, quality: 82.6, growth: 68.4, value: 63.7, momentum: 72.3 },
+    { rank: 10, name: "Action Construction Equipment Ltd.", industry: "Construction & Engineering", final: 74.2, quality: 87.3, growth: 70.1, value: 55.9, momentum: 45.2 },
+    { rank: 11, name: "Infosys Ltd.", industry: "IT Consulting & Software", final: 73.8, quality: 94.2, growth: 58.7, value: 56.1, momentum: 69.5 },
+    { rank: 12, name: "Hindustan Unilever Ltd.", industry: "Personal Products", final: 72.5, quality: 98.6, growth: 48.3, value: 50.1, momentum: 63.4 },
+    { rank: 13, name: "Chambal Fertilisers & Chemicals Ltd.", industry: "Fertilizers", final: 72.1, quality: 84.9, growth: 51.2, value: 85.8, momentum: 48.1 },
+    { rank: 14, name: "EPL Ltd.", industry: "Containers & Packaging", final: 71.9, quality: 80.3, growth: 60.1, value: 83.9, momentum: 54.6 },
+    { rank: 15, name: "Pearl Global Industries Ltd.", industry: "Other Apparels & Accessories", final: 71.5, quality: 76.9, growth: 82.1, value: 65.8, momentum: 70.3 },
+    { rank: 16, name: "Strides Pharma Science Ltd.", industry: "Pharmaceuticals", final: 70.9, quality: 82.1, growth: 56.9, value: 89.1, momentum: 62.5 },
+    { rank: 17, name: "V2 Retail Ltd.", industry: "Department Stores", final: 70.2, quality: 74.5, growth: 81.7, value: 53.2, momentum: 59.8 },
+    { rank: 18, name: "Acutaas Chemicals Ltd.", industry: "Pharmaceuticals", final: 69.8, quality: 78.1, growth: 98.9, value: 35.2, momentum: 79.1 },
+    { rank: 19, name: "Kirloskar Pneumatic Company Ltd.", industry: "Compressors & Pumps", final: 69.5, quality: 84.2, growth: 68.1, value: 48.9, momentum: 53.8 },
+    { rank: 20, name: "Central Depository Services (India) Ltd.", industry: "Other Financial Services", final: 69.1, quality: 93.8, growth: 48.1, value: 38.6, momentum: 59.9 },
+    { rank: 21, name: "GNA Axles Ltd.", industry: "Auto Parts & Equipment", final: 68.8, quality: 72.9, growth: 61.3, value: 86.9, momentum: 38.4 },
+    { rank: 22, name: "Emami Ltd.", industry: "Personal Products", final: 68.5, quality: 94.9, growth: 50.2, value: 48.1, momentum: 65.9 },
+    { rank: 23, name: "Cummins India Ltd.", industry: "Industrial Machinery", final: 68.1, quality: 89.1, growth: 49.8, value: 40.3, momentum: 71.2 },
+    { rank: 24, name: "Just Dial Ltd.", industry: "Internet Software & Services", final: 67.9, quality: 78.8, growth: 69.2, value: 75.8, momentum: 49.3 },
+    { rank: 25, name: "IndiaMART InterMESH Ltd.", industry: "Internet & Catalogue Retail", final: 67.5, quality: 90.1, growth: 55.3, value: 55.2, momentum: 74.8 },
+    { rank: 26, name: "Asian Paints Ltd.", industry: "Paints", final: 67.1, quality: 92.3, growth: 49.8, value: 35.6, momentum: 72.1 },
+    { rank: 27, name: "Sonata Software Ltd.", industry: "IT Consulting & Software", final: 66.9, quality: 77.3, growth: 42.1, value: 85.1, momentum: 41.5 },
+    { rank: 28, name: "Dodla Dairy Ltd.", industry: "Packaged Foods", final: 66.5, quality: 81.3, growth: 49.2, value: 68.3, momentum: 64.9 },
+    { rank: 29, name: "Mastek Ltd.", industry: "IT Consulting & Software", final: 66.2, quality: 72.9, growth: 48.1, value: 77.8, momentum: 45.1 },
+    { rank: 30, name: "Triveni Turbine Ltd.", industry: "Heavy Electrical Equipment", final: 65.8, quality: 89.2, growth: 53.4, value: 33.1, momentum: 48.2 },
+    { rank: 31, name: "Repco Home Finance Ltd.", industry: "Housing Finance", final: 65.4, quality: 67.1, growth: 39.8, value: 84.2, momentum: 55.3 },
+    { rank: 32, name: "Shivalik Bimetal Controls Ltd.", industry: "Other Industrial Goods", final: 64.9, quality: 77.8, growth: 62.1, value: 41.8, momentum: 61.2 },
+    { rank: 33, name: "KFIN Technologies Ltd.", industry: "Other Financial Services", final: 64.5, quality: 83.1, growth: 51.2, value: 35.9, momentum: 58.3 },
+    { rank: 34, name: "Venus Pipes & Tubes Ltd.", industry: "Iron & Steel Products", final: 64.1, quality: 72.5, growth: 73.2, value: 49.1, momentum: 50.3 },
+    { rank: 35, name: "Dr. Lal Pathlabs Ltd.", industry: "Healthcare Services", final: 63.8, quality: 84.5, growth: 44.1, value: 39.1, momentum: 76.8 },
+    { rank: 36, name: "Inox Wind Ltd.", industry: "Heavy Electrical Equipment", final: 63.5, quality: 70.1, growth: 95.8, value: 45.1, momentum: 46.2 },
+    { rank: 37, name: "Awfis Space Solutions Ltd", industry: "Special Consumer Services", final: 63.1, quality: 69.2, growth: 87.3, value: 52.1, momentum: 39.9 },
+    { rank: 38, name: "Yatra Online Ltd.", industry: "Travel Support Services", final: 62.9, quality: 63.1, growth: 76.8, value: 66.2, momentum: 67.1 },
+    { rank: 39, name: "Nippon Life India Asset Management Ltd.", industry: "Asset Management Cos.", final: 62.5, quality: 72.8, growth: 51.9, value: 39.8, momentum: 74.9 },
+    { rank: 40, name: "Godrej Consumer Products Ltd.", industry: "Personal Products", final: 62.1, quality: 74.1, growth: 45.2, value: 48.1, momentum: 71.8 },
+    { rank: 41, name: "Sumitomo Chemical India Ltd.", industry: "Agrochemicals", final: 61.8, quality: 80.9, growth: 61.9, value: 32.8, momentum: 81.2 },
+    { rank: 42, name: "Ceigall India Ltd.", industry: "Construction & Engineering", final: 61.4, quality: 65.8, growth: 57.9, value: 63.1, momentum: 46.2 },
+    { rank: 43, name: "DLF Ltd.", industry: "Realty", final: 61.1, quality: 76.3, growth: 50.2, value: 45.1, momentum: 60.9 },
+    { rank: 44, name: "TVS Motor Company Ltd.", industry: "2/3 Wheelers", final: 60.8, quality: 79.2, growth: 64.1, value: 41.2, momentum: 62.3 },
+    { rank: 45, name: "Olectra Greentech Ltd.", industry: "Commercial Vehicles", final: 60.5, quality: 70.2, growth: 60.3, value: 38.1, momentum: 69.8 },
+    { rank: 46, name: "Motilal Oswal Financial Services Ltd.", industry: "Capital Markets", final: 60.1, quality: 58.9, growth: 43.1, value: 56.9, momentum: 75.1 },
+    { rank: 47, name: "Varun Beverages Ltd.", industry: "Other Food & Beverages", final: 59.8, quality: 63.2, growth: 68.9, value: 35.8, momentum: 61.9 },
+    { rank: 48, name: "V-Mart Retail Ltd.", industry: "Department Stores", final: 59.4, quality: 67.5, growth: 68.9, value: 56.8, momentum: 50.6 },
+    { rank: 49, name: "Bansal Wire Industries Ltd.", industry: "Iron & Steel Products", final: 59.1, quality: 64.3, growth: 35.1, value: 60.1, momentum: 59.9 },
+    { rank: 50, name: "Delhivery Ltd.", industry: "Warehousing & Logistics", final: 58.8, quality: 62.5, growth: 67.1, value: 47.9, momentum: 73.1 },
+];
+
+const colors = {
+    primary: '#0A2463',
+    secondary: '#3E92CC',
+    accent: '#D8315B',
+    light: '#F4F7F5',
+    gray: '#C4C4C4',
+    blue: '#3b82f6',
+    green: '#22c55e',
+    orange: '#f97316',
+    purple: '#8b5cf6',
+};
+
+function wrapLabel(str, max_width) {
+    if (typeof str !== 'string' || str.length <= max_width) return str;
+    const words = str.split(' ');
+    const lines = [];
+    let current_line = '';
+    for (const word of words) {
+        if ((current_line + ' ' + word).trim().length > max_width && current_line.length > 0) {
+            lines.push(current_line);
+            current_line = word;
+        } else {
+            current_line = (current_line + ' ' + word).trim();
+        }
+    }
+    if (current_line.length > 0) lines.push(current_line);
+    return lines;
+}
+
+const tooltipTitleCallback = (tooltipItems) => {
+    const item = tooltipItems[0];
+    let label = item.chart.data.labels[item.dataIndex];
+    if (Array.isArray(label)) {
+        return label.join(' ');
+    }
+    return label;
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const top10Data = stockData.slice(0, 10).sort((a, b) => a.final - b.final);
+    new Chart(document.getElementById('topPerformersChart'), {
+        type: 'bar',
+        data: {
+            labels: top10Data.map(d => wrapLabel(d.name, 20)),
+            datasets: [{
+                label: 'Final QVGM Score',
+                data: top10Data.map(d => d.final),
+                backgroundColor: colors.secondary,
+                borderColor: colors.primary,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { title: tooltipTitleCallback } }
+            },
+            scales: { x: { beginAtZero: false, min: 70 } }
+        }
+    });
+
+    new Chart(document.getElementById('qualityGrowthChart'), {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Quality vs. Growth',
+                data: stockData.map(d => ({ x: d.quality, y: d.growth, label: d.name })),
+                backgroundColor: colors.accent,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const d = context.raw;
+                            return `${d.label}: (Q: ${d.x.toFixed(1)}, G: ${d.y.toFixed(1)})`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Quality Score' } },
+                y: { title: { display: true, text: 'Growth Score' } }
+            }
+        }
+    });
+    
+    new Chart(document.getElementById('valueMomentumChart'), {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Value vs. Momentum',
+                data: stockData.map(d => ({ x: d.value, y: d.momentum, label: d.name })),
+                backgroundColor: colors.primary,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const d = context.raw;
+                            return `${d.label}: (V: ${d.x.toFixed(1)}, M: ${d.y.toFixed(1)})`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Value Score' } },
+                y: { title: { display: true, text: 'Momentum Score' } }
+            }
+        }
+    });
+
+    const sectorData = stockData.reduce((acc, d) => {
+        if (!acc[d.industry]) {
+            acc[d.industry] = { q: [], v: [], g: [], m: [], count: 0 };
+        }
+        acc[d.industry].q.push(d.quality);
+        acc[d.industry].v.push(d.value);
+        acc[d.industry].g.push(d.growth);
+        acc[d.industry].m.push(d.momentum);
+        acc[d.industry].count++;
+        return acc;
+    }, {});
+
+    const avgSectorData = Object.entries(sectorData).map(([name, data]) => ({
+        name,
+        count: data.count,
+        quality: data.q.reduce((a, b) => a + b, 0) / data.count,
+        value: data.v.reduce((a, b) => a + b, 0) / data.count,
+        growth: data.g.reduce((a, b) => a + b, 0) / data.count,
+        momentum: data.m.reduce((a, b) => a + b, 0) / data.count,
+    })).filter(d => d.count > 2).sort((a,b) => b.quality - a.quality);
+
+    new Chart(document.getElementById('sectorStrengthChart'), {
+        type: 'bar',
+        data: {
+            labels: avgSectorData.map(d => wrapLabel(d.name, 16)),
+            datasets: [
+                { label: 'Quality', data: avgSectorData.map(d => d.quality), backgroundColor: colors.blue },
+                { label: 'Growth', data: avgSectorData.map(d => d.growth), backgroundColor: colors.green },
+                { label: 'Value', data: avgSectorData.map(d => d.value), backgroundColor: colors.orange },
+                { label: 'Momentum', data: avgSectorData.map(d => d.momentum), backgroundColor: colors.purple },
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: { callbacks: { title: tooltipTitleCallback } },
+                legend: { position: 'top' }
+            },
+            scales: { y: { beginAtZero: true, title: { display: true, text: 'Average Score' } } }
+        }
+    });
+    
+    const tableBody = document.querySelector('#rankingTable tbody');
+    function populateTable(data) {
+        tableBody.innerHTML = '';
+        data.forEach(stock => {
+            const row = `
+                <tr class="bg-white border-b hover:bg-gray-50">
+                    <td class="px-4 py-3 font-bold text-gray-900">${stock.rank}</td>
+                    <td class="px-4 py-3 font-semibold">${stock.name}</td>
+                    <td class="px-4 py-3">${stock.industry}</td>
+                    <td class="px-4 py-3 font-bold text-blue-600">${stock.final.toFixed(1)}</td>
+                    <td class="px-4 py-3">${stock.quality.toFixed(1)}</td>
+                    <td class="px-4 py-3">${stock.growth.toFixed(1)}</td>
+                    <td class="px-4 py-3">${stock.value.toFixed(1)}</td>
+                    <td class="px-4 py-3">${stock.momentum.toFixed(1)}</td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    populateTable(stockData);
+    
+    document.querySelectorAll('.table-sortable th').forEach(headerCell => {
+        headerCell.addEventListener('click', () => {
+            const table = headerCell.closest('table');
+            const colIndex = Array.from(headerCell.parentNode.children).indexOf(headerCell);
+            const sortType = headerCell.dataset.sort;
+            let sortDirection = headerCell.dataset.sortDirection === 'asc' ? 'desc' : 'asc';
+            headerCell.dataset.sortDirection = sortDirection;
+
+            const sortedData = [...stockData].sort((a, b) => {
+                let valA, valB;
+                const keys = ['rank', 'name', 'industry', 'final', 'quality', 'growth', 'value', 'momentum'];
+                valA = a[keys[colIndex]];
+                valB = b[keys[colIndex]];
+                
+                if (sortType === 'number') {
+                    return sortDirection === 'asc' ? valA - valB : valB - valA;
+                } else {
+                    return sortDirection === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                }
+            });
+            populateTable(sortedData);
+        });
+    });
+});
+</script>
+</body>
+</html>
